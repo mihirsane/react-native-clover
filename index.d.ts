@@ -64,7 +64,7 @@ interface Refund extends Transaction {
   payment: ObjectRef;
 }
 
-interface Credit extends Transaction { 
+interface Credit extends Transaction {
   order: ObjectRef;
   tender: Tender;
 }
@@ -94,21 +94,22 @@ interface VoidReason {
   DEVELOPER_PAY_TIP_ADJUST_FAILED: String;
   FAILED: String;
   GIFTCARD_LOAD_FAILED: String;
-  NOT_APPROVED: String; 
-  REJECT_DUPLICATE: String; 
-  REJECT_OFFLINE: String; 
+  NOT_APPROVED: String;
+  REJECT_DUPLICATE: String;
+  REJECT_OFFLINE: String;
   REJECT_PARTIAL_AUTH: String;
   REJECT_SIGNATURE: String;
-  TRANSPORT_ERROR: String; 
-  USER_CANCEL: String; 
-  USER_CUSTOMER_CANCEL: String; 
-  USER_GIFTCARD_LOAD_CANCEL: String; 
+  TRANSPORT_ERROR: String;
+  USER_CANCEL: String;
+  USER_CUSTOMER_CANCEL: String;
+  USER_GIFTCARD_LOAD_CANCEL: String;
 }
 
 interface TipMode {
   NO_TIP: String;
   TIP_PROVIDED: String;
   ON_SCREEN_BEFORE_PAYMENT: String;
+  ON_SCREEN_AFTER_PAYMENT: String;
 }
 
 interface PrintJobFlag {
@@ -211,7 +212,7 @@ export const useScanner: Function;
  */
 declare const _default: {
   // General Methods ///////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////
   /**
   * Obtains authentication data from the Clover service.
   * @param {Boolean} [forceValidateToken = false] Flag to validate against API, increases latency, use only when needed.
@@ -243,9 +244,9 @@ declare const _default: {
   unregisterScanner: () => Void;
 
   // Payment Methods ///////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////
   /**
-   * Readies the Clover Bridge for sending payment requests to Clover device. Must be called before calling any payment method and should be 
+   * Readies the Clover Bridge for sending payment requests to Clover device. Must be called before calling any payment method and should be
    * called as soon as possible.
    * @param {String} raid Remote Application Id. Obtained from Clover App dashboard.
    */
@@ -261,13 +262,13 @@ declare const _default: {
   cancelSPA: () => Void;
 
   // Constant Methods //////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////
   isFlex: () => Boolean;
   isMini: () => Boolean;
   getSpaVersion: () => String;
 
   // Enums/Constants ///////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////
   /**
    * Clover HSN
    */
@@ -293,6 +294,6 @@ declare const _default: {
    * Bridge Emitted Events
    */
   EVENT: BridgeEvent
-}
+};
 
 export default _default;

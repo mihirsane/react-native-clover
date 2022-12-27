@@ -176,6 +176,7 @@ Clover.voidPayment(option).then(result => {});
     * `NO_TIP`
     * `TIP_PROVIDED`
     * `ON_SCREEN_BEFORE_PAYMENT`
+    * `ON_SCREEN_AFTER_PAYMENT`
 * [PRINT_JOB_FLAG](https://clover.github.io/clover-android-sdk/com/clover/sdk/v1/printer/job/PrintJob.html)
 * `EVENT`
     * `BARCODE_SCANNER`
