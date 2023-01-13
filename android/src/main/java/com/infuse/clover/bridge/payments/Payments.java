@@ -125,7 +125,7 @@ public class Payments {
             ReadableMap tip = tips.getMap(i);
             try {
 
-                com.clover.sdk.v3.payments.api.TipSuggestion tipSuggestion = new com.clover.sdk.v3.payments.api.TipSuggestion(tip.getString(NAME_PARAMETER),null,(long) tip.getInt(PERCENTAGE_PARAMETER));
+                com.clover.sdk.v3.payments.api.TipSuggestion tipSuggestion = com.clover.sdk.v3.payments.api.TipSuggestion.Percentage(tip.getString(NAME_PARAMETER), (long) tip.getInt(PERCENTAGE_PARAMETER));
                 tipSuggestions.add(tipSuggestion);
             } catch(NoSuchKeyException | UnexpectedNativeTypeException e) {
                 Log.e("ReactNativeClover", "Skipping invalid TipSuggestion at index: " + i, e);
