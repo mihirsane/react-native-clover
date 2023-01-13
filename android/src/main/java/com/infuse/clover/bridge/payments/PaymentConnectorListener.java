@@ -46,6 +46,7 @@ public class PaymentConnectorListener implements IPaymentConnectorListener {
     @Override
     public void onTipAdjustAuthResponse(TipAdjustAuthResponse response) {
         Log.d(TAG, "onTipAdjustAuthResponse");
+
     }
 
     @Override

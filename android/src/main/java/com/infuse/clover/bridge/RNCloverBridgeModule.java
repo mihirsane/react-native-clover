@@ -22,12 +22,14 @@ import com.clover.sdk.util.CloverAuth;
 import com.clover.sdk.util.CustomerMode;
 import com.clover.sdk.v1.BindingException;
 import com.clover.sdk.v1.ClientException;
+import com.clover.sdk.v1.Intents;
 import com.clover.sdk.v1.ServiceException;
 import com.clover.sdk.v1.printer.job.StaticPaymentPrintJob;
 import com.clover.sdk.v1.printer.job.StaticReceiptPrintJob;
 import com.clover.sdk.v3.order.Order;
 import com.clover.sdk.v3.order.OrderConnector;
 import com.clover.sdk.v3.payments.Payment;
+import com.clover.sdk.v3.payments.api.PaymentRequestIntentBuilder;
 import com.clover.sdk.v3.scanner.BarcodeResult;
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
@@ -56,6 +58,7 @@ class RNCloverBridgeModule extends ReactContextBaseJavaModule {
     private ReactApplicationContext mContext;
 
     private static final int CHOOSE_ACCOUNT_REQUEST = 41920;
+    private static final int PAYMENT_REQUEST = 41921;
 
     private BridgePaymentConnector bridgePaymentConnector;
 
@@ -178,6 +181,11 @@ class RNCloverBridgeModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void salIntent(ReadableMap options, Promise promise) {
+        bridgePaymentConnector.saleIntent(mContext,options, promise);
+    }
+
+    @ReactMethod
     public void manualRefund(ReadableMap options, Promise promise) {
         bridgePaymentConnector.manualRefund(options, promise);
     }
@@ -264,13 +272,25 @@ class RNCloverBridgeModule extends ReactContextBaseJavaModule {
 
     private final ActivityEventListener activityEventListener = new ActivityEventListener() {
         @Deprecated
-        public void onActivityResult(int requestCode, int resultCode, Intent data) { }
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (requestCode == CHOOSE_ACCOUNT_REQUEST) {
+
+            }
+        }
 
         public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
             if (requestCode == CHOOSE_ACCOUNT_REQUEST) {
                 WritableMap map = Arguments.createMap();
                 map.putBoolean("success", resultCode == RESULT_OK);
                 accountPromise.resolve(map);
+            }else if(requestCode == PAYMENT_REQUEST) {
+                if(resultCode == RESULT_OK) {
+                    Payment payment = (Payment) data.getParcelableExtra(Intents.EXTRA_PAYMENT);
+                    // TODO: verify payment is as expected (e.g. partial amount, signature, offline, tippable, etc.)
+                } else {
+                    // payment failed, check for error
+                    String failureMessage = data.getStringExtra(Intents.EXTRA_FAILURE_MESSAGE);
+                }
             }
         }
 

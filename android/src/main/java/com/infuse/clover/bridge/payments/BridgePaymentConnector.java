@@ -2,6 +2,7 @@ package com.infuse.clover.bridge.payments;
 
 import android.accounts.Account;
 import android.content.Context;
+import android.content.Intent;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -22,6 +23,7 @@ import com.clover.sdk.v3.payments.DataEntryLocation;
 import com.clover.sdk.v3.payments.Payment;
 import com.clover.sdk.v3.payments.Refund;
 import com.clover.sdk.v3.payments.TipMode;
+import com.clover.sdk.v3.payments.api.PaymentRequestIntentBuilder;
 import com.clover.sdk.v3.remotepay.ManualRefundRequest;
 import com.clover.sdk.v3.remotepay.RefundPaymentRequest;
 import com.clover.sdk.v3.remotepay.SaleRequest;
@@ -50,6 +52,7 @@ public class BridgePaymentConnector {
 
     private boolean printReceipt = false;
     private String orderId;
+
 
     static public Payment findPayment(List<Payment> payments, String paymentId) {
         for (Payment payment : payments) {
@@ -160,6 +163,21 @@ public class BridgePaymentConnector {
             }
         }, promise);
     }
+
+    public void saleIntent(final ReactApplicationContext context, final ReadableMap options, Promise promise) {
+            paymentPromise = promise;
+
+            startConnector(new Runnable() {
+                @Override
+                public void run() {
+                    PaymentRequestIntentBuilder builder = new PaymentRequestIntentBuilder(getExternalPaymentId(options), (long) options.getInt(Payments.AMOUNT));
+
+                    Intent intent = builder.build(context);
+                    context.startActivity(intent);
+
+                }
+            }, promise);
+        }
 
     public void refundPayment(final ReadableMap options, Promise promise) {
         paymentPromise = promise;
