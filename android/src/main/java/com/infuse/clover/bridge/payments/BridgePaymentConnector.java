@@ -171,6 +171,13 @@ public class BridgePaymentConnector {
                 @Override
                 public void run() {
                     PaymentRequestIntentBuilder builder = new PaymentRequestIntentBuilder(getExternalPaymentId(options), (long) options.getInt(Payments.AMOUNT));
+
+                    ReadableArray tipSuggestions = options.getArray(Payments.TIP_SUGGESTIONS);
+                    PaymentRequestIntentBuilder.TipOptions tipOptions = PaymentRequestIntentBuilder.TipOptions.PromptCustomer((long) options.getInt(Payments.AMOUNT), tipSuggestions);;
+                    builder.tipAndSignatureOptions(tipOptions,
+                            null,
+                            true);
+
                     Intent intent = builder.build(context);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
