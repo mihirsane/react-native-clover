@@ -52,6 +52,8 @@ import java.util.concurrent.TimeUnit;
 
 import static android.app.Activity.RESULT_OK;
 import com.facebook.react.bridge.WritableMap;
+import com.infuse.clover.bridge.payments.Payments;
+
 class RNCloverBridgeModule extends ReactContextBaseJavaModule {
 
     static final String TAG = "RNCloverBridge";
@@ -281,7 +283,7 @@ class RNCloverBridgeModule extends ReactContextBaseJavaModule {
                 if(resultCode == RESULT_OK) {
                     Payment payment = (Payment) data.getParcelableExtra(Intents.EXTRA_PAYMENT);
                     WritableMap map = Arguments.createMap();
-                    map = mapPayment(payment);
+                    map = Payments.mapPayment(payment);
                     map.putBoolean("success", resultCode == RESULT_OK);
                     paymentPromise.resolve(map);
                     // TODO: verify payment is as expected (e.g. partial amount, signature, offline, tippable, etc.)
@@ -343,31 +345,4 @@ class RNCloverBridgeModule extends ReactContextBaseJavaModule {
         public void onHostDestroy() { }
     };
 
-    public WritableMap mapPayment(Payment payment) {
-        WritableMap map = Arguments.createMap();
-        map.putString("id", payment.getId());
-        map.putString("externalPaymentId", payment.getExternalPaymentId());
-        map.putInt("amount", payment.getAmount().intValue());
-        map.putString("createdTime", payment.getCreatedTime().toString());
-
-        map.putBoolean("offline", payment.getOffline());
-
-        // Check for tip amount, flex/mini2 and station 2018 format differently
-        // For some reason hasTipAmount returns true even when null
-        int tipAmount = 0;
-        if (payment.getTipAmount() != null) {
-            tipAmount = payment.getTipAmount().intValue();
-        }
-        map.putInt("tipAmount", tipAmount);
-        // clientCreatedTime seems to be null
-        // modifiedTime seems to be null
-
-        // Add in Tender
-        map.putMap("tender", buildTenderMap(payment.getTender()));
-
-        // Add in Order Ref
-        map.putMap("order", buildReference(payment.getOrder()));
-
-        return map;
-    }
 }

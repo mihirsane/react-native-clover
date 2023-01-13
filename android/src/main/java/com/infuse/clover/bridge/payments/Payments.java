@@ -8,30 +8,30 @@ import com.clover.sdk.v3.payments.Refund;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 
-class Payments {
+public class Payments {
     // Bridge constants for Clover per-transaction settings.
-    static final String CARD_ENTRY_METHODS = "cardEntryMethods";
-    static final String DISABLE_DUPLICATE_CHECKING = "disableDuplicateChecking";
-    static final String DISABLE_RESTART_TRANSACTION_ON_FAIL = "disableRestartTransactionOnFail";
-    static final String DISABLE_PRINTING = "disablePrinting";
-    static final String DISABLE_RECEIPT_SELECTION = "disableReceiptSelection";
-    static final String SIGNATURE_THRESHOLD = "signatureThreshold";
-    static final String SIGNATURE_ENTRY_LOCATION = "signatureEntryLocation";
-    static final String AUTO_ACCEPT_SIGNATURE = "autoAcceptSignature";
-    static final String TIP_AMOUNT = "tipAmount";
-    static final String TIPPABLE_AMOUNT = "tippableAmount";
-    static final String TIP_MODE = "tipMode";
-    static final String TIP_SUGGESTIONS = "tipSuggestions";
-    static final String SET_FULL_REFUND = "setFullRefund";
-    static final String AMOUNT = "amount";
-    static final String ORDER_ID = "orderId";
-    static final String PAYMENT_ID = "paymentId";
-    static final String REFUND_ID = "refundId";
-    static final String VOID_REASON = "voidReason";
-    static final String EXTERNAL_PAYMENT_ID = "externalPaymentId";
-    static final String GENERATE_EXTERNAL_PAYMENT_ID = "generateExternalPaymentId";
+    public static final String CARD_ENTRY_METHODS = "cardEntryMethods";
+    public static final String DISABLE_DUPLICATE_CHECKING = "disableDuplicateChecking";
+    public static final String DISABLE_RESTART_TRANSACTION_ON_FAIL = "disableRestartTransactionOnFail";
+    public static final String DISABLE_PRINTING = "disablePrinting";
+    public static final String DISABLE_RECEIPT_SELECTION = "disableReceiptSelection";
+    public static final String SIGNATURE_THRESHOLD = "signatureThreshold";
+    public static final String SIGNATURE_ENTRY_LOCATION = "signatureEntryLocation";
+    public static final String AUTO_ACCEPT_SIGNATURE = "autoAcceptSignature";
+    public static final String TIP_AMOUNT = "tipAmount";
+    public static final String TIPPABLE_AMOUNT = "tippableAmount";
+    public static final String TIP_MODE = "tipMode";
+    public static final String TIP_SUGGESTIONS = "tipSuggestions";
+    public static final String SET_FULL_REFUND = "setFullRefund";
+    public static final String AMOUNT = "amount";
+    public static final String ORDER_ID = "orderId";
+    public static final String PAYMENT_ID = "paymentId";
+    public static final String REFUND_ID = "refundId";
+    public static final String VOID_REASON = "voidReason";
+    public static final String EXTERNAL_PAYMENT_ID = "externalPaymentId";
+    public static final String GENERATE_EXTERNAL_PAYMENT_ID = "generateExternalPaymentId";
 
-    static WritableMap mapPayment(Payment payment) {
+    public static WritableMap mapPayment(Payment payment) {
         WritableMap map = Arguments.createMap();
         map.putString("id", payment.getId());
         map.putString("externalPaymentId", payment.getExternalPaymentId());
@@ -59,7 +59,7 @@ class Payments {
         return map;
     }
 
-    static WritableMap mapRefund(Refund refund) {
+    public static WritableMap mapRefund(Refund refund) {
         WritableMap map = Arguments.createMap();
 
         map.putString("id", refund.getId());
@@ -72,7 +72,7 @@ class Payments {
         return map;
     }
 
-    static WritableMap mapCredit(Credit credit) {
+    public static WritableMap mapCredit(Credit credit) {
         WritableMap map = Arguments.createMap();
 
         map.putString("id", credit.getId());
