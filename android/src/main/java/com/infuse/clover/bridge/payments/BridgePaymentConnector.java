@@ -173,7 +173,8 @@ public class BridgePaymentConnector {
                     PaymentRequestIntentBuilder builder = new PaymentRequestIntentBuilder(getExternalPaymentId(options), (long) options.getInt(Payments.AMOUNT));
 
                     ReadableArray tipSuggestions = options.getArray(Payments.TIP_SUGGESTIONS);
-                    PaymentRequestIntentBuilder.TipOptions tipOptions = PaymentRequestIntentBuilder.TipOptions.PromptCustomer((long) options.getInt(Payments.AMOUNT), tipSuggestions);;
+
+                    PaymentRequestIntentBuilder.TipOptions tipOptions = PaymentRequestIntentBuilder.TipOptions.PromptCustomer((long) options.getInt(Payments.AMOUNT), Payments.buildTipSuggestions(tipSuggestions));;
                     builder.tipAndSignatureOptions(tipOptions,
                             null,
                             true);

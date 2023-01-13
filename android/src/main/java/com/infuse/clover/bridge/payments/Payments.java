@@ -1,12 +1,21 @@
 package com.infuse.clover.bridge.payments;
 
+import android.util.Log;
+
 import com.clover.sdk.v3.base.Reference;
 import com.clover.sdk.v3.base.Tender;
+import com.clover.sdk.v3.merchant.TipSuggestion;
 import com.clover.sdk.v3.payments.Credit;
 import com.clover.sdk.v3.payments.Payment;
 import com.clover.sdk.v3.payments.Refund;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.NoSuchKeyException;
+import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.UnexpectedNativeTypeException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Payments {
     // Bridge constants for Clover per-transaction settings.
@@ -105,5 +114,23 @@ public class Payments {
 
     private Payments() {
         throw new AssertionError();
+    }
+
+    public static List<TipSuggestion> buildTipSuggestions(ReadableArray tips) {
+        final String NAME_PARAMETER = "name";
+        final String PERCENTAGE_PARAMETER = "percentage";
+        List<TipSuggestion> tipSuggestions = new ArrayList<>();
+        for (int i = 0; i < tips.size(); i++) {
+            ReadableMap tip = tips.getMap(i);
+            try {
+                TipSuggestion tipSuggestion = new TipSuggestion();
+                tipSuggestion.setName(tip.getString(NAME_PARAMETER));
+                tipSuggestion.setPercentage((long) tip.getInt(PERCENTAGE_PARAMETER));
+                tipSuggestions.add(tipSuggestion);
+            } catch(NoSuchKeyException | UnexpectedNativeTypeException e) {
+                Log.e("ReactNativeClover", "Skipping invalid TipSuggestion at index: " + i, e);
+            }
+        }
+        return tipSuggestions;
     }
 }
