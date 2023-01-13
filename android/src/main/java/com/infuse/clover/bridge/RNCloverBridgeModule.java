@@ -303,7 +303,7 @@ class RNCloverBridgeModule extends ReactContextBaseJavaModule {
                 if(resultCode == RESULT_OK) {
                     Payment payment = (Payment) data.getParcelableExtra(Intents.EXTRA_PAYMENT);
                     WritableMap map = Arguments.createMap();
-                    map = mapPayment(payment);
+                    map = Payments.mapPayment(payment);
                     map.putBoolean("success", resultCode == RESULT_OK);
                     // TODO: verify payment is as expected (e.g. partial amount, signature, offline, tippable, etc.)
                 } else {
