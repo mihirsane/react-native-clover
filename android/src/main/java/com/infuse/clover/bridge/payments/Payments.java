@@ -13,6 +13,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.NoSuchKeyException;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.UnexpectedNativeTypeException;
+import com.facebook.react.bridge.ReadableArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,16 +117,15 @@ public class Payments {
         throw new AssertionError();
     }
 
-    public static List<TipSuggestion> buildTipSuggestions(ReadableArray tips) {
+    public static List<com.clover.sdk.v3.payments.api.TipSuggestion> buildTipSuggestions(ReadableArray tips) {
         final String NAME_PARAMETER = "name";
         final String PERCENTAGE_PARAMETER = "percentage";
-        List<TipSuggestion> tipSuggestions = new ArrayList<>();
+        List<com.clover.sdk.v3.payments.api.TipSuggestion> tipSuggestions = new ArrayList<>();
         for (int i = 0; i < tips.size(); i++) {
             ReadableMap tip = tips.getMap(i);
             try {
-                TipSuggestion tipSuggestion = new TipSuggestion();
-                tipSuggestion.setName(tip.getString(NAME_PARAMETER));
-                tipSuggestion.setPercentage((long) tip.getInt(PERCENTAGE_PARAMETER));
+
+                com.clover.sdk.v3.payments.api.TipSuggestion tipSuggestion = new com.clover.sdk.v3.payments.api.TipSuggestion(tip.getString(NAME_PARAMETER),null,(long) tip.getInt(PERCENTAGE_PARAMETER));
                 tipSuggestions.add(tipSuggestion);
             } catch(NoSuchKeyException | UnexpectedNativeTypeException e) {
                 Log.e("ReactNativeClover", "Skipping invalid TipSuggestion at index: " + i, e);
