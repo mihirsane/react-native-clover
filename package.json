@@ -1,7 +1,7 @@
 {
   "name": "react-native-clover",
   "title": "React Native Clover",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "React Native native module for Clover SDK",
   "main": "index.js",
   "repository": {
