@@ -164,7 +164,7 @@ public class BridgePaymentConnector {
         }, promise);
     }
 
-    public void saleIntent(final ReactApplicationContext context, final ReadableMap options, Promise promise) {
+    public void saleIntent(final Context context, final ReadableMap options, Promise promise) {
             paymentPromise = promise;
 
             startConnector(new Runnable() {
