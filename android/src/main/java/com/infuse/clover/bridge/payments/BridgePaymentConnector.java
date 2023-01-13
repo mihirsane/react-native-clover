@@ -172,7 +172,7 @@ public class BridgePaymentConnector {
                 public void run() {
                     PaymentRequestIntentBuilder builder = new PaymentRequestIntentBuilder(getExternalPaymentId(options), (long) options.getInt(Payments.AMOUNT));
                     Intent intent = builder.build(context);
-                    myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
 
                 }
