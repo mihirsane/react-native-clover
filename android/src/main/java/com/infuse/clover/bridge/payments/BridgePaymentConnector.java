@@ -166,26 +166,51 @@ public class BridgePaymentConnector {
 
     public void saleIntent(final Context context, final ReadableMap options, Promise promise) {
             paymentPromise = promise;
-
             startConnector(new Runnable() {
                 @Override
                 public void run() {
                     PaymentRequestIntentBuilder builder = new PaymentRequestIntentBuilder(getExternalPaymentId(options), (long) options.getInt(Payments.AMOUNT));
-
+                    PaymentRequestIntentBuilder.TipOptions tipOptions = null;
+                    PaymentRequestIntentBuilder.SignatureOptions signatureOptions = null;
                     ReadableArray tipSuggestions = options.getArray(Payments.TIP_SUGGESTIONS);
+                    if (tipSuggestions != null) {
+                        tipOptions = PaymentRequestIntentBuilder.TipOptions.PromptCustomer((long) options.getInt(Payments.AMOUNT), Payments.buildTipSuggestions(tipSuggestions));
 
-                    PaymentRequestIntentBuilder.TipOptions tipOptions = PaymentRequestIntentBuilder.TipOptions.PromptCustomer((long) options.getInt(Payments.AMOUNT), Payments.buildTipSuggestions(tipSuggestions));;
+                        if (options.hasKey(Payments.SIGNATURE_THRESHOLD)) {
+                            signatureOptions = PaymentRequestIntentBuilder.SignatureOptions.PromptCustomer((long) options.getInt(Payments.SIGNATURE_THRESHOLD),)
+                        }
+
+
+                    }
                     builder.tipAndSignatureOptions(tipOptions,
-                            null,
+                            signatureOptions,
                             true);
-
                     Intent intent = builder.build(context);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
 
                 }
             }, promise);
-        }
+    }
+
+    public void showTIp(final Context context, final ReadableMap options, Promise promise) {
+        paymentPromise = promise;
+        startConnector(new Runnable() {
+            @Override
+            public void run() {
+                PaymentRequestIntentBuilder builder = new PaymentRequestIntentBuilder(getExternalPaymentId(options), (long) options.getInt(Payments.AMOUNT));
+                ReadableArray tipSuggestions = options.getArray(Payments.TIP_SUGGESTIONS);
+                PaymentRequestIntentBuilder.TipOptions tipOptions = PaymentRequestIntentBuilder.TipOptions.PromptCustomer((long) options.getInt(Payments.AMOUNT), Payments.buildTipSuggestions(tipSuggestions));;
+                builder.tipAndSignatureOptions(tipOptions,
+                        null,
+                        true);
+                Intent intent = builder.build(context);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+
+            }
+        }, promise);
+    }
 
     public void refundPayment(final ReadableMap options, Promise promise) {
         paymentPromise = promise;
