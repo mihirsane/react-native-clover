@@ -181,7 +181,7 @@ class RNCloverBridgeModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void salIntent(ReadableMap options, Promise promise) {
+    public void saleIntent(ReadableMap options, Promise promise) {
         bridgePaymentConnector.saleIntent(mContext,options, promise);
     }
 

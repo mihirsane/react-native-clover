@@ -252,6 +252,7 @@ declare const _default: {
    */
   initializePaymentConnector: (raid: String) => Void;
   sale: (option: SaleOption) => Promise<SaleResult>;
+  saleIntent: (option: SaleOption) => Promise<SaleResult>;
   refundPayment: (option: RefundPaymentOption) => Promise<RefundPaymentResult>;
   manualRefund: (option: ManualRefundOption) => Promise<ManualRefundResult>;
   voidPayment: (option: VoidPaymentOption) => Promise<VoidPaymentResult>;
